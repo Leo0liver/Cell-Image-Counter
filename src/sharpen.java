@@ -25,12 +25,21 @@ class sharpen
     }
 
     public void process(String file)throws IOException
-    {   
-      File f = new File(file);
-      image = ImageIO.read(f);
-      Kernel kernel = new Kernel(3, 3, new float[] { -1, -1, -1, -1, 9, -1, -1,-1,-1});
-      BufferedImageOp op = new ConvolveOp(kernel);
-      image = op.filter(image_copy,null);
-      ImageIO.write(image,"JPG",new File("sharp.JPG"));
+    {    File f = new File(file);
+         image = ImageIO.read(f);
+        
+         
+         image_copy = image;
+        
+         Kernel kernel = new Kernel(3, 3, new float[] { -1, -1, -1, -1, 9, -1, -1,
+            -1, -1});
+         BufferedImageOp op = new ConvolveOp(kernel);
+         image = op.filter(image_copy,null);
+
+         
+      
+        ImageIO.write(image,"JPG",new File("sharp.JPG"));
     }
+   
+   
 }
