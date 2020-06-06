@@ -22,12 +22,11 @@ class MedianFilter{
          {
             System.out.println("invalid input");
             System.exit(0);
-         } 
-         MedianFilter s = new MedianFilter();
-         s.process(args[0]);
+         }
+         process(args[0]);
     }
 
-    public void process(String file)throws IOException
+    public static void process(String file)throws IOException
     {
         Color[] pixel=new Color[9];
         int[] R=new int[9];
@@ -57,7 +56,7 @@ class MedianFilter{
                Arrays.sort(B);
                img.setRGB(i,j,new Color(R[4],B[4],G[4]).getRGB());
             }
-        ImageIO.write(img,"jpg",output);
+        ImageIO.write(img, "JPG", new File("output.JPG"));
    }
    
 }

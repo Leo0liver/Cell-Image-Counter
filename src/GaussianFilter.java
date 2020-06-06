@@ -12,11 +12,10 @@ public class GaussianFilter {
             System.out.println("invalid input");
             System.exit(0);
         }
-        GaussianFilter b = new GaussianFilter();
-        b.process(args[0]);
+        process(args[0]);
     }
 
-    public void process(String file)throws IOException{
+    public static void process(String file)throws IOException{
         BufferedImage image;
         File f = new File(file);
         image = ImageIO.read(f);
