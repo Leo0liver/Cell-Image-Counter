@@ -29,8 +29,8 @@ public class Threshold {
         for (int y = 0; y < image.getHeight(); y++) {
             raster.getPixels(0, y, image.getWidth(), 1, pixels);
             for (int i = 0; i < pixels.length; i++) {
-                if (pixels[i] < threshold) pixels[i] = 0;
-                else pixels[i] = 255;
+                if (pixels[i] < threshold) pixels[i] = 255;
+                else pixels[i] = 0;
             }
             raster.setPixels(0, y, image.getWidth(), 1, pixels);
         }
