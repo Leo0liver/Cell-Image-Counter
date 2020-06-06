@@ -19,7 +19,7 @@ public class GaussianFilter {
         BufferedImage image;
         File f = new File(file);
         image = ImageIO.read(f);
-        Kernel kernel = makeGaussianKernel(3);
+        Kernel kernel = makeGaussianKernel(15);
         BufferedImageOp op = new ConvolveOp(kernel);
         image = op.filter(image, null);
 
