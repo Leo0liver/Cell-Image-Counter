@@ -6,7 +6,7 @@ import java.awt.image.ConvolveOp;
 import java.awt.image.Kernel;
 
 
-class sharpen
+class Sharpen
 {
     int width;
     int height;

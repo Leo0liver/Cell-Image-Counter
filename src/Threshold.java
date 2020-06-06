@@ -13,11 +13,10 @@ public class Threshold {
             System.out.println("invalid input");
             System.exit(0);
         }
-        process(args[0]);
+        process(args[0], 80);
     }
 
-    public static void process(String file)throws IOException {
-        int threshold = 80;
+    public static void process(String file, int threshold)throws IOException {
         BufferedImage image;
         File f = new File(file);
         image = ImageIO.read(f);
