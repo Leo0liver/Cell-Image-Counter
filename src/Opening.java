@@ -6,7 +6,7 @@ import java.awt.image.ConvolveOp;
 import java.awt.image.Kernel;
 
 
-class opening
+class Opening
 {
     int width;
     int height;

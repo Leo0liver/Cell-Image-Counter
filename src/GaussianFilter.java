@@ -12,14 +12,14 @@ public class GaussianFilter {
             System.out.println("invalid input");
             System.exit(0);
         }
-        process(args[0]);
+        process(args[0], 15);
     }
 
-    public static void process(String file)throws IOException{
+    public static void process(String file, int radius)throws IOException{
         BufferedImage image;
         File f = new File(file);
         image = ImageIO.read(f);
-        Kernel kernel = makeGaussianKernel(15);
+        Kernel kernel = makeGaussianKernel(radius);
         BufferedImageOp op = new ConvolveOp(kernel);
         image = op.filter(image, null);
 
