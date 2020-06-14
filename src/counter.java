@@ -28,9 +28,15 @@ public class counter extends Application
             System.out.println("invalid input");
             System.exit(0);
          }
+        //placeholder
+        BufferedImage i = ImageIO.read(new File(args[0]));
+        ImageIO.write(i,"jpg",new File("output.jpg"));
+
          //calling the image processing pipeline
-         imageProcessor.main(args);
+         imageProcessor im = new imageProcessor();
+         im.main(args);
          process("output.jpg");
+
          launch(args);
 
     }
