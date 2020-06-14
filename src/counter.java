@@ -1,32 +1,18 @@
-import java.awt.*;
-import java.awt.event.ActionEvent;
 import java.awt.image.BufferedImage;
 import java.io.*;
-import java.nio.file.Files;
-import java.util.Arrays;
-import java.util.Deque;
-import java.util.List;
-import java.util.Stack;
 import javax.imageio.ImageIO;
-
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-
 import javafx.application.Application;
-import javafx.event.EventHandler;
-import javafx.geometry.Point2D;
 import javafx.scene.Scene;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
-import java.awt.image.BufferedImageOp;
-import java.awt.image.ConvolveOp;
-import java.awt.image.Kernel;
-
 public class counter extends Application
 {
+    //declare global variables
     static BufferedImage image ;
     static int count=2;
     static int[][] map;
@@ -36,22 +22,22 @@ public class counter extends Application
 
     public static void main(String [] args)throws IOException
     {
+        //check for file input
          if(args.length!=1)
          {
             System.out.println("invalid input");
             System.exit(0);
          }
-          imageProcessor.main(args);
-
+         //calling the image processing pipeline
+         imageProcessor.main(args);
          process("output.jpg");
          launch(args);
 
     }
-
+    //method that starts the counting procedure
     public static void process(String file)throws IOException
      {
-
-
+          //setup the final image file and 2d array for region detection
           File f = new File(file);
           image = ImageIO.read(f);
           w=image.getWidth();
@@ -59,12 +45,9 @@ public class counter extends Application
           map = new int[image.getWidth()][image.getHeight()];
           createMap();
           countCells();
-          //pr();
           System.out.println(count-2);
-
-          
-
     }
+    //method converts black pixels to 1 and white to 0 in the 2d array
     public static void createMap()
     {
           for(int i=0;i<image.getWidth()-1;i++)
@@ -72,19 +55,13 @@ public class counter extends Application
                for(int j=0;j<image.getHeight()-1;j++)
                {
                     if(((image.getRGB(i, j) & 0x00FFFFFF) == 0))
-                    {
-                         map[i][j]= 1;
-                         
-                    }
+                        map[i][j]= 1;
                     else
-                    {
                          map[i][j]= 0;
-                    }
-                   // System.out.print(map[i][j]);
                }
-               //System.out.println();
           }
     }
+    //region detect method
     public static void countCells()
     {
          for(int i=0;i<image.getWidth();i++)
@@ -93,52 +70,20 @@ public class counter extends Application
                {
                     if(map[i][j]==1)
                     {
+                        //calls floodfill method
                          FloodFill(i,j);
+                            //if the region has less than 28 pixels do not count to avoid stray black pixels they were not eliminated in the pipeline
                             if(c>28)
                               count++; 
                             c=0;
-                         
-
-                         
                     }
                }
           }
     }
-    public static void pr()
-    {
-     for(int i=0;i<image.getWidth()-1;i++)
-     {
-          for(int j=0;j<image.getHeight()-1;j++)
-          {
-               System.out.print(map[i][j]);
-          }
-          System.out.println();
-     }
-    }
+    //floodfill method
     public static void FloodFill(int i,int j)
     {
-        // c++;
-          // Point2D p = new Point2D(i, j);
-          // Stack<Point2D> sc = new Stack<Point2D>();
-          // //System.out.println(p.getX()+" "+p.getY());
-          // sc.push(p);
-
-          // while (sc.empty()==false) {
-          //      p = sc.pop();
-
-          //      if((map[(int)p.getX()][(int)p.getY()]  == 1) && (int)p.getX()>0 && (int)p.getY()>0 && (int)p.getX()<image.getWidth()-1 && (int)p.getY()<image.getHeight()-1 )
-          //      {
-          //           map[(int)p.getX()][(int)p.getY()]  =0;
-          //           sc.push(new Point2D(i+1,j));
-          //           sc.push(new Point2D(i,j+1));
-          //           sc.push(new Point2D(i,j-1));
-          //           sc.push(new Point2D(i-1,j));
-          //      }
-          // }
-
-          //recursive method
-          
-         // System.out.println(c);
+          //if current pixel is black and within bounds floodfill
           while(  i>=0 && j>=0 && i<=image.getWidth()-1 && j<=image.getHeight()-1 && (map[i][j]  == 1 ) )
           {
                c++;
@@ -147,12 +92,10 @@ public class counter extends Application
                FloodFill(i, j+1);
                FloodFill(i, j-1);
                FloodFill(i-1, j);
-
-
           }
-          
     }
 
+    //GUI code
     @Override
     public void start(Stage stage) throws Exception {
         stage.setTitle("Cell Count = "+(count-2));
@@ -166,9 +109,6 @@ public class counter extends Application
         ImageView img4 = new ImageView(new Image(im[3].toURI().toString(),w/2,h/2,false,false));
         ImageView img5 = new ImageView(new Image(im[4].toURI().toString(),w/2,h/2,false,false));
         ImageView img6 = new ImageView(new Image(im[5].toURI().toString(),w/2,h/2,false,false));
-
-
-
         VBox vb = new VBox();
         HBox hb1 = new HBox();
         hb1.getChildren().add(img1);
@@ -183,6 +123,7 @@ public class counter extends Application
         StackPane root = new StackPane();
         root.getChildren().add(vb);
         stage.setScene(new Scene(root,(w/2)*3, h));
+        stage.setResizable(false);
         stage.show();
     }
 }

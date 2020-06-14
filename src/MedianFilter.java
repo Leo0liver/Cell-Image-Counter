@@ -11,13 +11,16 @@ import java.awt.image.Kernel;
 
 
 class MedianFilter{
+    //global variables
     int width;
     int height;
     BufferedImage image;
     BufferedImage image_copy;
+    //2d filter array
     float[][] filter = {{1,2,1},{2,3,3},{1,2,1}};
     public static void main(String [] args)throws IOException
     {
+        //check input file
          if(args.length!=1)
          {
             System.out.println("invalid input");
@@ -28,15 +31,18 @@ class MedianFilter{
 
     public static void process(String file)throws IOException
     {
+
         Color[] pixel=new Color[9];
+        //arrays to store the RBG values of the current pixel and its neighbours
         int[] R=new int[9];
         int[] B=new int[9];
         int[] G=new int[9];
-        File output=new File("denoise.jpg");
+        //read the file to be denoised
         BufferedImage img=ImageIO.read(new File(file));
         for(int i=1;i<img.getWidth()-1;i++)
             for(int j=1;j<img.getHeight()-1;j++)
             {
+                //get all the interested pixel values
                pixel[0]=new Color(img.getRGB(i-1,j-1));
                pixel[1]=new Color(img.getRGB(i-1,j));
                pixel[2]=new Color(img.getRGB(i-1,j+1));
@@ -46,16 +52,19 @@ class MedianFilter{
                pixel[6]=new Color(img.getRGB(i+1,j-1));
                pixel[7]=new Color(img.getRGB(i,j-1));
                pixel[8]=new Color(img.getRGB(i,j));
+               //splitting the pixel values
                for(int k=0;k<9;k++){
                    R[k]=pixel[k].getRed();
                    B[k]=pixel[k].getBlue();
                    G[k]=pixel[k].getGreen();
                }
+               //sorting the RBG array and choosing the median value
                Arrays.sort(R);
                Arrays.sort(G);
                Arrays.sort(B);
                img.setRGB(i,j,new Color(R[4],B[4],G[4]).getRGB());
             }
+        //outputting the image file
         ImageIO.write(img, "JPG", new File("output.JPG"));
    }
    

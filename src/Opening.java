@@ -15,6 +15,7 @@ class Opening
     
     public static void main(String [] args)throws IOException
     {
+        //checking the input file
          if(args.length!=1)
          {
             System.out.println("invalid input");
@@ -26,17 +27,12 @@ class Opening
     public static void process(String file)throws IOException
     {    File f = new File(file);
          image = ImageIO.read(f);
-        
-         
          image_copy = image;
-        
+         //creating a 3x3 kernel with the filter vales
          Kernel kernel = new Kernel(3, 3, new float[] { 0, 1, 0, 1, 0, 1, 0,
             1, 0});
          BufferedImageOp op = new ConvolveOp(kernel);
          image = op.filter(image_copy,null);
-
-         
-      
         ImageIO.write(image,"JPG",new File("output.JPG"));
     }
    
