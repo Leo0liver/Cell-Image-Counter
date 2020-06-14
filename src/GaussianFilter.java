@@ -28,7 +28,7 @@ public class GaussianFilter {
 
     public static Kernel makeGaussianKernel(float radius) {
         int r = (int)Math.ceil(radius);
-        int rows = r*2+1;
+        int rows = r*2+2;
         float[] matrix = new float[rows];
         float sigma = radius/3;
         float sigma22 = 2*sigma*sigma;

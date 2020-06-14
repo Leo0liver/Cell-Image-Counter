@@ -11,13 +11,7 @@ import java.awt.image.Kernel;
 
 
 class MedianFilter{
-    //global variables
-    int width;
-    int height;
-    BufferedImage image;
-    BufferedImage image_copy;
-    //2d filter array
-    float[][] filter = {{1,2,1},{2,3,3},{1,2,1}};
+
     public static void main(String [] args)throws IOException
     {
         //check input file

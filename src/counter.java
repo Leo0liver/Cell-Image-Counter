@@ -45,7 +45,7 @@ public class counter extends Application
           map = new int[image.getWidth()][image.getHeight()];
           createMap();
           countCells();
-          System.out.println(count-2);
+          System.out.println("Cell Count = "+(count-2));
     }
     //method converts black pixels to 1 and white to 0 in the 2d array
     public static void createMap()
